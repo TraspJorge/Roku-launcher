@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="EcpTask" extends="Task">
+    <interface>
+        <field id="command" type="string" />
+        <field id="appId" type="string" />
+        <field id="apps" type="node" />
+        <field id="status" type="string" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/EcpTask.brs" />
+</component>

@@ -1,0 +1,62 @@
+[
+ {
+  "id": "22297",
+  "title": "Spotify Music",
+  "icon": "pkg:/images/apps/22297.jpg"
+ },
+ {
+  "id": "51320",
+  "title": "Red Bull TV",
+  "icon": "pkg:/images/apps/51320.jpg"
+ },
+ {
+  "id": "12",
+  "title": "Netflix",
+  "icon": "pkg:/images/apps/12.jpg"
+ },
+ {
+  "id": "2595",
+  "title": "Crunchyroll",
+  "icon": "pkg:/images/apps/2595.png"
+ },
+ {
+  "id": "637497",
+  "title": "Feliz7Play TV",
+  "icon": "pkg:/images/apps/637497.png"
+ },
+ {
+  "id": "837",
+  "title": "YouTube",
+  "icon": "pkg:/images/apps/837.jpg"
+ },
+ {
+  "id": "252585",
+  "title": "Pluto TV – TV Ao vivo e Filmes",
+  "icon": "pkg:/images/apps/252585.png"
+ },
+ {
+  "id": "120906",
+  "title": "MUBI",
+  "icon": "pkg:/images/apps/120906.png"
+ },
+ {
+  "id": "621046",
+  "title": "Runtime",
+  "icon": "pkg:/images/apps/621046.png"
+ },
+ {
+  "id": "773622",
+  "title": "Backdrops",
+  "icon": "pkg:/images/apps/773622.png"
+ },
+ {
+  "id": "551012",
+  "title": "Apple TV",
+  "icon": "pkg:/images/apps/551012.png"
+ },
+ {
+  "id": "13",
+  "title": "Prime Video",
+  "icon": "pkg:/images/apps/13.jpg"
+ }
+]

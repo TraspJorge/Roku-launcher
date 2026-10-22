@@ -1,0 +1,13 @@
+# Copie para ~/.config/systemd/user/ e ajuste o caminho; depois:
+#   systemctl --user daemon-reload && systemctl --user enable --now roku-meu-menu
+[Unit]
+Description=Meu Menu: abre ao ligar a TV e mantem a lista de apps atualizada
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python3 %h/Downloads/meu-menu/tools/servico_tv.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

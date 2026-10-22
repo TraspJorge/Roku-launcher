@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Animacao quadro a quadro: um Poster por quadro, so o atual fica visivel -->
+<component name="SpriteAnim" extends="Group">
+    <interface>
+        <field id="framePrefix" type="string" />
+        <field id="frames" type="integer" />
+        <field id="frameWidth" type="integer" />
+        <field id="frameHeight" type="integer" />
+        <field id="fps" type="float" value="15" />
+        <field id="playing" type="boolean" onChange="OnPlaying" />
+        <field id="mirrored" type="boolean" onChange="OnMirrored" />
+        <!-- Alternativa ao timer: um Animation pode interpolar este campo e escolher o quadro -->
+        <field id="frameIndex" type="float" onChange="OnFrameIndex" />
+        <field id="displayWidth" type="float" />
+        <field id="displayHeight" type="float" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/SpriteAnim.brs" />
+    <children>
+        <Timer id="frameTimer" repeat="true" />
+    </children>
+</component>

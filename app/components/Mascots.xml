@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pikachu correndo e Rimuru slime quicando pela borda de baixo, de tempos em tempos -->
+<component name="Mascots" extends="Group">
+    <interface>
+        <field id="paused" type="boolean" value="false" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/Mascots.brs" />
+    <children>
+        <!-- Quadros gerados por tools/gerar_mascotes.py (corrida estilo anime) -->
+        <SpriteAnim id="runner" framePrefix="pkg:/images/mascotes/pikachu_" frames="5" frameWidth="56" frameHeight="30" fps="12.5" visible="false" />
+        <!-- Rimuru: um pulo em 16 quadros; quadro e posicao andam na mesma linha do tempo -->
+        <SpriteAnim id="slime" framePrefix="pkg:/images/mascotes/rimuru_" frames="16" frameWidth="47" frameHeight="56" visible="false" />
+        <Timer id="runTimer" />
+        <Timer id="slimeTimer" />
+        <Animation id="slimeAnim" easeFunction="linear" />
+        <Animation id="runAnim" duration="6.5" easeFunction="linear" />
+    </children>
+</component>

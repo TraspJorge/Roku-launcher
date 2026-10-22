@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Olhos do Gengar no fundo escuro: surgem parados num ponto, piscam e somem -->
+<component name="GengarEyes" extends="Group">
+    <interface>
+        <field id="paused" type="boolean" value="false" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/GengarEyes.brs" />
+    <children>
+        <Poster id="eyes" uri="pkg:/images/mascotes/gengar_olhos.png" opacity="0" />
+        <Timer id="eyesTimer" />
+        <Animation id="eyesAnim" duration="7" easeFunction="linear" />
+    </children>
+</component>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Linha do painel de opcoes: fundo branco que acende com o foco, icone opcional -->
+<component name="OptionItem" extends="Group">
+    <interface>
+        <field id="itemContent" type="node" onChange="OnContent" />
+        <field id="focusPercent" type="float" onChange="OnFocus" />
+        <field id="width" type="float" />
+        <field id="height" type="float" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/OptionItem.brs" />
+    <children>
+        <Poster id="bg" uri="pkg:/images/ui/row.9.png" width="608" height="76" opacity="0" />
+        <MaskGroup id="iconMask" maskUri="pkg:/images/ui/small_mask.png" translation="[14,11]" visible="false">
+            <Poster id="icon" width="72" height="54" loadDisplayMode="scaleToFill" />
+        </MaskGroup>
+        <Label id="text" translation="[28,0]" width="552" height="76" vertAlign="center">
+            <Font role="font" uri="font:BoldSystemFontFile" size="30" />
+        </Label>
+    </children>
+</component>

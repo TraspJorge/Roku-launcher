@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="MenuScene" extends="Scene">
+    <script type="text/brightscript" uri="pkg:/components/MenuScene.brs" />
+    <children>
+        <!-- Fundo: cor do app em foco, desfocada (icone carregado minusculo e esticado) -->
+        <!-- Grafite escuro em vez de preto puro: icones com fundo preto continuam visiveis -->
+        <Rectangle width="1920" height="1080" color="0x1E1F26FF" />
+        <Poster id="ambientA" width="1920" height="1080" loadWidth="24" loadHeight="18" loadDisplayMode="scaleToFill" opacity="0" />
+        <Poster id="ambientB" width="1920" height="1080" loadWidth="24" loadHeight="18" loadDisplayMode="scaleToFill" opacity="0" />
+        <Poster id="background" width="1920" height="1080" loadDisplayMode="scaleToZoom" />
+        <Rectangle width="1920" height="1080" color="0x00000030" />
+        <Poster uri="pkg:/images/ui/fade_left.png" width="1300" height="1080" />
+        <Poster uri="pkg:/images/ui/fade_bottom.png" width="1920" height="1080" />
+
+        <!-- Olhos do Gengar no fundo, atras dos apps -->
+        <GengarEyes id="gengarEyes" />
+
+        <Group id="content" opacity="0">
+            <!-- Entradas HDMI (canto superior esquerdo) -->
+            <Group id="inputs" translation="[100,40]" />
+
+            <!-- Data ao lado do relogio, na mesma linha -->
+            <Label id="date" translation="[1000,62]" width="640" horizAlign="right" color="0xFFFFFFA0">
+                <Font role="font" uri="font:SystemFontFile" size="28" />
+            </Label>
+            <Label id="clock" translation="[1660,48]" width="160" horizAlign="right" color="0xFFFFFFFF">
+                <Font role="font" uri="font:BoldSystemFontFile" size="46" />
+            </Label>
+
+            <!-- Destaque (top shelf) -->
+            <!-- Nome centralizado na area esquerda e no meio da altura da previa -->
+            <Group id="heroText" translation="[100,140]">
+                <Label id="heroTitle" width="960" height="390" horizAlign="center" vertAlign="center" color="0xFFFFFFFF">
+                    <Font role="font" uri="font:BoldSystemFontFile" size="88" />
+                </Label>
+                <Label id="heroHint" translation="[0,262]" width="960" horizAlign="center" color="0xFFFFFFB0">
+                    <Font role="font" uri="font:SystemFontFile" size="30" />
+                </Label>
+            </Group>
+
+            <Group id="heroArt" translation="[1110,140]" scaleRotateCenter="[260,195]">
+                <Poster uri="pkg:/images/ui/hero_shadow.png" translation="[-50,-34]" width="620" height="490" />
+                <MaskGroup id="heroMask" maskUri="pkg:/images/ui/hero_mask.png">
+                    <Poster id="heroIcon" width="520" height="390" loadDisplayMode="scaleToFill" />
+                    <Poster uri="pkg:/images/ui/tile_sheen.png" width="520" height="390" opacity="0.8" />
+                </MaskGroup>
+                <Poster uri="pkg:/images/ui/hero_border.png" width="520" height="390" />
+            </Group>
+
+            <!-- Grade de apps -->
+            <Group id="rowsClip" clippingRect="[0,570,1920,510]">
+                <Group id="rows" translation="[85,610]" />
+            </Group>
+
+            <Label id="message" translation="[160,700]" width="1600" horizAlign="center" wrap="true" color="0xFFFFFFFF">
+                <Font role="font" uri="font:SystemFontFile" size="32" />
+            </Label>
+        </Group>
+
+        <Mascots id="mascots" />
+
+        <!-- Painel de opcoes (tecla *) -->
+        <Group id="optionsOverlay" visible="false" opacity="0">
+            <Rectangle width="1920" height="1080" color="0x000000B8" />
+            <Group id="panel">
+                <Poster id="panelShadow" uri="pkg:/images/ui/panel_shadow.9.png" translation="[-60,-46]" />
+                <Poster id="panelBg" uri="pkg:/images/ui/panel.9.png" blendColor="0x2A2B33FF" />
+                <Poster id="panelEdge" uri="pkg:/images/ui/panel_edge.9.png" />
+                <MaskGroup id="thumbMask" maskUri="pkg:/images/ui/thumb_mask.png" translation="[36,32]">
+                    <Poster id="thumb" width="128" height="96" loadDisplayMode="scaleToFill" />
+                </MaskGroup>
+                <Label id="optionsTitle" translation="[186,40]" width="460" color="0xFFFFFFFF">
+                    <Font role="font" uri="font:BoldSystemFontFile" size="36" />
+                </Label>
+                <Label id="optionsSubtitle" translation="[186,88]" width="460" color="0xFFFFFF80">
+                    <Font role="font" uri="font:SystemFontFile" size="24" />
+                </Label>
+                <Rectangle translation="[36,152]" width="608" height="2" color="0xFFFFFF1A" />
+                <MarkupList
+                    id="optionsList"
+                    translation="[36,172]"
+                    itemComponentName="OptionItem"
+                    itemSize="[608,76]"
+                    itemSpacing="[0,6]"
+                    drawFocusFeedback="false"
+                    vertFocusAnimationStyle="floatingFocus" />
+            </Group>
+        </Group>
+
+        <!-- Abertura: os 6 quadradinhos da tela de abertura voam ate a grade e viram os icones -->
+        <Group id="intro">
+            <Rectangle id="introBg" width="1920" height="1080" color="0x000000FF" />
+            <Group id="introLogo" scaleRotateCenter="[960,540]" />
+        </Group>
+
+        <Rectangle id="fader" width="1920" height="1080" color="0x000000FF" opacity="0" />
+
+        <!-- O menu aparece quando os quadradinhos da abertura chegam na grade -->
+        <Animation id="introAnim" duration="0.45" easeFunction="outCubic" delay="0.8">
+            <FloatFieldInterpolator key="[0,1]" keyValue="[0.0,1.0]" fieldToInterp="content.opacity" />
+        </Animation>
+        <Animation id="logoAnim" duration="1.15" easeFunction="inOutCubic" />
+        <Animation id="focusAnim" duration="0.24" easeFunction="outCubic" />
+        <Animation id="heroAnim" duration="0.45" easeFunction="outCubic" />
+        <Animation id="launchAnim" duration="0.45" easeFunction="inOutCubic" />
+        <Animation id="overlayAnim" duration="0.28" easeFunction="outCubic">
+            <FloatFieldInterpolator key="[0,1]" keyValue="[0,1]" fieldToInterp="optionsOverlay.opacity" />
+            <Vector2DFieldInterpolator key="[0,1]" keyValue="[[0.92,0.92],[1,1]]" fieldToInterp="panel.scale" />
+        </Animation>
+        <!-- Sons desativados. Para ativar, coloque WAVs em app/sounds e descomente:
+        <SoundEffect id="sfxMove" uri="pkg:/sounds/move.wav" volume="50" />
+        <SoundEffect id="sfxSelect" uri="pkg:/sounds/select.wav" volume="60" />
+        -->
+        <Timer id="clockTimer" repeat="true" duration="1" />
+    </children>
+</component>

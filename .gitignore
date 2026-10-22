@@ -1,0 +1,7 @@
+# Dados locais (senha do Modo Desenvolvedor e IPs) - nunca versionar
+tools/config.json
+app/source/pc.json
+# Gerados
+meu-menu.zip
+__pycache__/
+*.pyc
