@@ -1,7 +1,19 @@
+<p align="center"><img src="app/images/icon_focus_fhd.png" width="180" alt="Ícone do Meu Menu"></p>
+
 # Meu Menu (Roku launcher)
 
 Tela inicial personalizada, no estilo Apple TV, para **Roku TV** (testado numa AOC 32" com Roku OS 15.3.4).
 É instalada como app de desenvolvedor (sideload) e abre automaticamente quando a TV liga.
+
+![Tela principal do Meu Menu](docs/menu.jpg)
+
+## Telas
+
+| Destaque com a cor do app em foco | Painel de opções (tecla ✱) |
+|---|---|
+| ![Netflix em foco com fundo vermelho](docs/destaque.jpg) | ![Painel com Mover, Remover do menu e Cancelar](docs/painel-opcoes.jpg) |
+| **Abertura animada**: os quadradinhos voam até a grade | **Mascotes**: olhos do Gengar no fundo e Pikachu correndo embaixo |
+| ![Quadradinhos da abertura a caminho da grade](docs/abertura.jpg) | ![Olhos do Gengar acima do nome do app](docs/mascotes.jpg) |
 
 ## Recursos
 - Destaque com prévia do app, fundo com a cor do app em foco, ícones arredondados com sombra e brilho
