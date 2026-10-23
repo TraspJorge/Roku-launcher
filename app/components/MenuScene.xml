@@ -112,5 +112,12 @@
         <SoundEffect id="sfxSelect" uri="pkg:/sounds/select.wav" volume="60" />
         -->
         <Timer id="clockTimer" repeat="true" duration="1" />
+        <!-- Protecao de tela: fundo preto com relogio que muda de lugar -->
+        <Group id="saver" visible="false">
+            <Rectangle width="1920" height="1080" color="0x000000FF" />
+            <Label id="saverClock" translation="[760,440]" width="400" horizAlign="center" color="0xFFFFFF60" text="">
+                <Font role="font" uri="font:SystemFontFile" size="96" />
+            </Label>
+        </Group>
     </children>
 </component>

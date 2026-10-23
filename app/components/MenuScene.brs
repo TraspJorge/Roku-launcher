@@ -17,6 +17,8 @@ Sub init()
     m.moving = false
     m.uptime = CreateObject("roTimespan")
     m.optionsClosedAt = -1000
+    m.idleSecs = 0
+    m.idleLimit = 10 * 60 'Segundos sem tecla ate a protecao de tela
     m.uiScale = m.global.uiScale
     if m.uiScale = invalid then m.uiScale = 1.0
 
@@ -101,13 +103,24 @@ Sub FinishIntro()
 End Sub
 
 Sub UpdateClock()
+    m.idleSecs = m.idleSecs + 1
+    if m.idleSecs = m.idleLimit
+        m.top.findNode("saver").visible = true
+    end if
+    if m.idleSecs >= m.idleLimit and m.idleSecs mod 60 = 0
+        'Muda o relogio de lugar para nao marcar a tela
+        m.top.findNode("saverClock").translation = [100 + Rnd(1000), 100 + Rnd(800)]
+    end if
     days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]
     months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
     now = CreateObject("roDateTime")
     now.ToLocalTime()
     minutes = now.GetMinutes().ToStr()
     if minutes.Len() < 2 then minutes = "0" + minutes
-    m.clock.text = now.GetHours().ToStr() + ":" + minutes
+    hours = now.GetHours().ToStr()
+    if hours.Len() < 2 then hours = "0" + hours
+    m.clock.text = hours + ":" + minutes
+    m.top.findNode("saverClock").text = m.clock.text
     m.date.text = days[now.GetDayOfWeek()] + ", " + now.GetDayOfMonth().ToStr() + " de " + months[now.GetMonth() - 1]
 End Sub
 
@@ -710,6 +723,13 @@ Sub OnLaunched()
 End Sub
 
 Function onKeyEvent(key as String, press as Boolean) as Boolean
+    m.idleSecs = 0
+    saver = m.top.findNode("saver")
+    if saver.visible
+        'A tecla que acorda a tela nao age no menu
+        if not press then saver.visible = false
+        return true
+    end if
     'Qualquer tecla pula a abertura
     if not m.introDone
         if press then FinishIntro()
