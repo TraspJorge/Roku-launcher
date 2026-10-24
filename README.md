@@ -32,10 +32,65 @@ então um serviço no PC (`tools/servico_tv.py`) faz a ponte:
 Os apps são abertos de dentro do menu com `roAppManager.LaunchApp`.
 
 ## Configuração
-1. Ative o Modo Desenvolvedor na TV (Home ×3, Cima ×2, Direita, Esquerda, Direita, Esquerda, Direita)
-2. Em Configurações → Sistema → Configurações avançadas → Controle por apps móveis → Acesso à rede: **Padrão**
-3. Copie `tools/config.exemplo.json` para `tools/config.json` com o IP da TV e a senha do Modo Desenvolvedor
-4. Instale o serviço: veja `tools/roku-meu-menu.service`
+
+### Requisitos
+- Roku TV (ou player) e o PC na **mesma rede local**
+- Python 3 no PC (e Pillow, só se for gerar os mascotes)
+- Conta em developer.roku.com só é necessária para **publicar** na Channel Store; para uso pessoal (sideload) não precisa
+
+### 1. Ativar o Modo Desenvolvedor na TV
+1. Na tela inicial, com o controle remoto, digite:
+   **Home ×3 → Cima ×2 → Direita → Esquerda → Direita → Esquerda → Direita**
+2. Abre a tela **Developer Settings**. Anote o **endereço IP** da TV (ex.: `192.168.0.25`)
+3. Selecione **Enable installer and restart** e aceite a licença (**I Agree**)
+4. Crie uma **senha** para o servidor de desenvolvimento e confirme. A TV reinicia
+
+> Dica: o IP também aparece em Configurações → Rede → Sobre. Reserve um IP fixo para a TV no roteador para ele não mudar.
+
+### 2. Liberar o controle pela rede
+Em Configurações → Sistema → Configurações avançadas → Controle por apps móveis → Acesso à rede: **Padrão**.
+Sem isso o serviço do PC não consegue ler os apps nem abrir o Meu Menu (a TV responde 403).
+
+### 3. Configurar o PC
+1. Copie `tools/config.exemplo.json` para `tools/config.json` e preencha:
+   ```json
+   {
+    "tv_ip": "192.168.0.25",
+    "dev_user": "rokudev",
+    "dev_password": "A_SENHA_QUE_VOCE_CRIOU"
+   }
+   ```
+   O usuário é sempre `rokudev` (não é o seu e-mail).
+2. Teste o acesso: abra `http://IP_DA_TV` no navegador e entre com `rokudev` e a senha. Deve aparecer o **Development Application Installer**
+
+### 4. Instalar o app
+- **Pelo navegador (manual):** na página do instalador, clique em **Upload**, escolha `meu-menu.zip` e depois **Install** (ou **Replace**, se já estiver instalado)
+- **Automático:** o serviço do PC reinstala sozinho quando a lista de apps muda
+
+### 5. Instalar o serviço (abrir ao ligar a TV)
+```bash
+mkdir -p ~/.config/systemd/user
+cp tools/roku-meu-menu.service ~/.config/systemd/user/
+# ajuste o caminho do ExecStart se a pasta não estiver em ~/Downloads/meu-menu
+systemctl --user daemon-reload
+systemctl --user enable --now roku-meu-menu
+systemctl --user status roku-meu-menu
+```
+
+### Depuração
+- **Console BrightScript:** `telnet IP_DA_TV 8085` mostra os `print` e os erros do app
+- **Controle por rede (ECP):** `http://IP_DA_TV:8060` (por exemplo `/query/apps` lista os apps instalados)
+- **Log do serviço:** `journalctl --user -u roku-meu-menu -f`
+
+### Problemas comuns
+| Sintoma | Causa provável |
+|---|---|
+| Página `http://IP_DA_TV` não abre | IP errado, ou PC e TV em redes diferentes |
+| Login recusado | Usuário deve ser `rokudev`; confira a senha do Modo Desenvolvedor |
+| Erro 403 ao ler apps | Acesso à rede está em "Desativado"/"Limitado"; troque para **Padrão** |
+| Erro ao instalar o `.zip` | Pasta extra na raiz do zip ou `manifest` ausente |
+| Sequência do controle não funciona | Digite mais devagar, começando pela tela inicial |
+| App some depois de atualizar a TV | Reative o Modo Desenvolvedor e reinstale o `meu-menu.zip` |
 
 ## Estrutura
 | Pasta/arquivo | Conteúdo |
