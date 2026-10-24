@@ -31,6 +31,9 @@ então um serviço no PC (`tools/servico_tv.py`) faz a ponte:
 
 Os apps são abertos de dentro do menu com `roAppManager.LaunchApp`.
 
+O serviço também abre a **porta 8787** do PC (a "ponte HDMI"), usada pelo menu para trocar de entrada da TV. Ela escuta em
+toda a rede local, **sem senha**, e só aceita `GET /launch/tvinput.<entrada>`. Use apenas em rede doméstica de confiança.
+
 ## Configuração
 
 ### Requisitos
@@ -64,7 +67,12 @@ Sem isso o serviço do PC não consegue ler os apps nem abrir o Meu Menu (a TV r
 2. Teste o acesso: abra `http://IP_DA_TV` no navegador e entre com `rokudev` e a senha. Deve aparecer o **Development Application Installer**
 
 ### 4. Instalar o app
-- **Pelo navegador (manual):** na página do instalador, clique em **Upload**, escolha `meu-menu.zip` e depois **Install** (ou **Replace**, se já estiver instalado)
+- **Pelo navegador (manual):** o `meu-menu.zip` **não vem no repositório**; gere-o primeiro (precisa do `tools/config.json` do passo 3):
+  ```bash
+  cd tools
+  python3 -c "import servico_tv; servico_tv.empacotar()"   # cria ../meu-menu.zip
+  ```
+  Depois, na página do instalador, clique em **Upload**, escolha `meu-menu.zip` e depois **Install** (ou **Replace**, se já estiver instalado)
 - **Automático:** o serviço do PC reinstala sozinho quando a lista de apps muda
 
 ### 5. Instalar o serviço (abrir ao ligar a TV)
@@ -97,7 +105,12 @@ systemctl --user status roku-meu-menu
 |---|---|
 | `app/` | Código do app Roku (BrightScript/SceneGraph) |
 | `tools/servico_tv.py` | Serviço do PC (abrir ao ligar, atualizar a lista, instalar) |
-| `tools/gerar_*.py` | Geram ícone, imagens da interface e mascotes (requer Pillow para os mascotes) |
+| `tools/gerar_icone.py`, `gerar_ui.py`, `gerar_mascotes.py`, `gerar_sons.py` | Geram o ícone, as imagens da interface, os mascotes e os sons (Pillow para os mascotes) |
+| `tools/config.exemplo.json` | Modelo do `tools/config.json` (IP da TV e senha do Modo Desenvolvedor; o arquivo real não vai para o git) |
+| `docs/` | Imagens usadas neste README |
+
+## Licença
+Sem licença: o código está público para leitura, mas todos os direitos ficam reservados. Não é um projeto aberto a contribuições.
 
 ## Créditos
 Animação do Pikachu: GIF de [gifdb.com](https://gifdb.com/gif/pokemon-pikachu-running-fdcgna00aeogxcjz.html) (fundo removido).
